@@ -32,8 +32,16 @@ def dollssales_reg(request):
 def schoolfees(request):
     instance = Schoolfees.objects.all()
 
-    #form = SchoolfeesForm()
-    context = {'instance':instance}
+    # form = SchoolfeesForm()
+    form = SchoolfeesForm()
+    if request.method == "POST":
+        form = SchoolfeesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-panel')
+        else:
+            form = SchoolfeesForm()
+    context = {'instance':instance, 'form':form}
     return render(request, 'daycareapp/schoolfeesform.html', context)
 
 

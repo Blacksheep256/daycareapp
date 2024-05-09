@@ -8,17 +8,18 @@ GENDER_CHOICES = (
 )
 
 class Babysitter(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    date_of_birth = models.DateField(max_length=20)
-    nin = models.CharField(max_length=20)
-    phone_number = models.CharField(max_length=20)
-    email = models.CharField(max_length=20,)
-    district = models.CharField(max_length=20, )
-    address = models.CharField(max_length=20, )
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, name= "gender", null=True)
-    def __str__(self):
-          return self.first_name
+   first_name = models.CharField(max_length=20)
+   last_name = models.CharField(max_length=20)
+   date_of_birth = models.DateField(max_length=20)
+   nin = models.CharField(max_length=20)
+   phone_number = models.CharField(max_length=20)
+   email = models.CharField(max_length=20,)
+   district = models.CharField(max_length=20, )
+   address = models.CharField(max_length=20, )
+   gender = models.CharField(choices=GENDER_CHOICES, max_length=128, name= "gender", null=True)
+    
+   def __str__(self):
+      return self.first_name
 
 
 GENDER_CHOICES = (
@@ -27,20 +28,19 @@ GENDER_CHOICES = (
 )
 
 class Baby(models.Model):
-    id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    date_of_birth = models.DateField(max_length=20)
-    age = models.FloatField(max_length=20)
-    parent_name = models.CharField(max_length=20)
-    guardian_name = models.CharField(max_length=20)
-    parent_phonenummber = models.CharField(max_length=20)
-    guardian_phonenumber = models.CharField(max_length=20)
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, name="gender", null=True)
-    
-
-    def __str__(self):
-         return  self.id, self.first_name
+   id = models.AutoField(primary_key=True)
+   first_name = models.CharField(max_length=20)
+   last_name = models.CharField(max_length=20)
+   date_of_birth = models.DateField(max_length=20)
+   age = models.FloatField(max_length=20)
+   parent_name = models.CharField(max_length=20)
+   guardian_name = models.CharField(max_length=20)
+   parent_phonenummber = models.CharField(max_length=20)
+   guardian_phonenumber = models.CharField(max_length=20)
+   gender = models.CharField(choices=GENDER_CHOICES, max_length=128, name="gender", null=True)
+   
+   def __str__(self):
+      return f"{self.first_name} {self.last_name}"
 
 
 class Procure(models.Model):
@@ -50,12 +50,11 @@ class Procure(models.Model):
    date_created = models.DateTimeField(auto_now_add=True)
 
    def __str__(self):
-        return self.item
+      return self.item
    
    @property
    def Total(self):
-               
-                             return self.unit_price * self.qty
+      return self.unit_price * self.qty
 
 class Dollsdashboard(models.Model):
    customer_name = models.CharField(max_length=20)
@@ -63,27 +62,19 @@ class Dollsdashboard(models.Model):
    datebought = models.DateTimeField(auto_now_add=True)
    totaldolls = models.FloatField(max_length=5 ,blank=True, null=True)
 
-
-
    def __str__(self):
-         return self.customer_name
+      return self.customer_name
 
-
-CHOICES = (
-   ('Day', 'Day'),
-   ('Halfday', 'Halfday')
-)
 
 class Schoolfees(models.Model):
-       baby = models.ForeignKey(Baby, on_delete=models.CASCADE, blank=True, null=True) 
-       type_of_payment = models.CharField(choices=CHOICES, max_length=128, name="type_of_payment", null=True)
-       amount_paid = models.FloatField(max_length=5)
-       date_of_payment = models.DateTimeField(auto_now_add=True)
+      STUDY_CHOICES = [
+         ('day', 'Day'),
+         ('halfday', 'Halfday')
+      ]
+      baby = models.ForeignKey(Baby, on_delete=models.CASCADE, blank=True, null=True) 
+      type_of_payment = models.CharField(choices=STUDY_CHOICES, max_length=128, null=True)
+      amount_paid = models.FloatField(max_length=5)
+      date_of_payment = models.DateTimeField(auto_now_add=True)
 
-       def __str__(self):
-
-             return self.baby.id
-
-       
-       
-
+      def __str__(self):
+         return f"{self.baby.first_name}"
