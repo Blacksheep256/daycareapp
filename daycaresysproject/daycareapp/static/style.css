@@ -1,0 +1,56 @@
+#form {
+    padding-top: 30px;
+    margin: 3%;
+}
+.pass{
+    margin: 5%;
+}
+.emailHelp{
+    padding: 10px;
+}
+.submit{
+ 
+   padding-top: 30px;
+}
+#header{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: large;
+    font-weight: 100;
+    color: black;
+    align-content: center;
+}
+body{
+    background-image: ;
+}
+
+#forgot{
+    margin: right 20px;
+    padding: top 30px;s
+}
+#navbar{
+    padding-left:510px ;
+    
+}
+#header{
+    font-size: 20px;
+}
+.navbar-text{
+    font-size: 30px;
+}
+#button{
+    padding-left: 30px;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+#psu{
+    display: flex;
+    box-sizing: border-box;
+}
+.test {
+    display: flex;
+   
+    flex-wrap: wrap;
+}
