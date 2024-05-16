@@ -23,22 +23,11 @@
                 <table class="table">
                     <tr>
                         <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Total Dolls</div>
+                            <div class="card-header">Total of Dolls Sold</div>
                             <div class="card-body">
-                                <h5 class="card-title">Success card title</h5>
+                                <h5 class="card-title">{{ total_dolls_sold }}</h5>
                             </div>
                         </div>
-
-
-                        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Dolls Sold</div>
-                            <div class="card-body">
-                                <h5 class="card-title">Danger card title</h5>
-                            </div>
-                            
-
-                        </div>
-                    
 </tr>
 
 
@@ -79,11 +68,11 @@
             </tr>
         </thead>
         <tbody>
-              {% for i in dolls %}
+              {% for sale in sales %}
             <tr>
-                <th scope="row">{{i.customer_name}}</th>
-                <td>{{i.dollsbought}}</td>
-                <td>{{i.datebought}}</td>
+                <th scope="row">{{sale.customer_name}}</th>
+                <td>{{sale.dollsbought}}</td>
+                <td>{{sale.datebought}}</td>
                    {% endfor %}
             </tr>
             <p>&nbsp;</p>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'daycareapp',
+  
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,9 @@ STATICFILES_DIR = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'admin-panel'
+LOGOUT_REDIRECT_URL = 'login'

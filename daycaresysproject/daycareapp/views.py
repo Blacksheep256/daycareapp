@@ -5,10 +5,65 @@ from .forms import *
 from django.http import HttpResponseRedirect
 from django.db.models import F, Count
 from django.db.models.functions import Length
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+# Logout view
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
+def restricted_page(request):
+    return render(request, 'restricted_page.html')
+
+# Login view
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('restricted_page')
+        else:
+            return HttpResponse("Invalid login details")
+    return render(request, 'daycareapp/login.html')
+
+
+
+
+
+@login_required
+def schoolfeeslist(request):
+    fees = Schoolfees.objects.all()
+
+    if request.method == 'GET':
+        form = SchoolFeesSearchForm(request.GET)
+        if form.is_valid():
+            start_date = form.cleaned_data.get('start_date')
+            end_date = form.cleaned_data.get('end_date')
+            first_name = form.cleaned_data.get('first_name')
+
+            # Start with all records
+            results = Schoolfees.objects.all()
+
+            # Filter by date range if both dates are provided
+            if start_date and end_date:
+                results = results.filter(date_of_payment__date__range=(start_date, end_date))
+
+            # Filter by first name if provided
+            if first_name:
+                results = results.filter(baby__first_name__icontains=first_name)
+        
+    else:
+        form = SchoolFeesSearchForm()
+        results = Schoolfees.objects.none()
+
+    return render(request, 'daycareapp/schoolfeeslist.html', {'form': form, 'results': results,'fees':fees})
+
+@login_required
 def dollssales_reg(request):
     submitted = False
     if request.method == "POST":
@@ -29,6 +84,7 @@ def dollssales_reg(request):
 
 
 
+@login_required
 def schoolfees(request):
     instance = Schoolfees.objects.all()
 
@@ -46,14 +102,18 @@ def schoolfees(request):
 
 
 
+
+@login_required
 def dollsdashboard(request):
 
-    dolls = Dollsdashboard.objects.all()
+    sales = Dollsdashboard.objects.all()
+    total_dolls_sold= sum(sale.dollsbought for sale in sales)
+    return render(request, 'daycareapp/DollsDashboard.html', {'sales': sales, 'total_dolls_sold': total_dolls_sold})
 
-    return render(request, "daycareapp/DollsDashboard.html",{"dolls":dolls})
 
 
 
+@login_required
 def procure_form(request):
     submitted = False
     if request.method == "POST":
@@ -72,7 +132,7 @@ def procure_form(request):
         "daycareapp/procrueform.html",
         {'form': form, 'submitted': submitted})
 
-
+@login_required
 def pro(request):
     procure = Procure.objects.all()
     if request.method == "POST":
@@ -91,6 +151,7 @@ def pro(request):
 
 
 
+@login_required
 def babysitter_delete(request, babysitter_id):
    
    delete2 = Babysitter.objects.get(pk=babysitter_id)
@@ -103,6 +164,7 @@ def baby_delete(request, baby_id):
     delete1.delete()
     return redirect('list-babies')
 
+@login_required
 def baby_update(request, baby_id):
        
        update2 = Baby.objects.get(pk=baby_id)
@@ -113,21 +175,18 @@ def baby_update(request, baby_id):
  
        return render(request, "daycareapp/updateprofile2.html", {"update2": update2,"form":form})
 
+@login_required
 def babysitter_update(request, babysitter_id):
        update1 = Babysitter.objects.get(pk=babysitter_id)
        form = BabysiiterregForm(request.POST or None, instance=update1)
        if form.is_valid():
             form.save()
             return redirect('list-babysitter')
- 
+       
        return render(request, "daycareapp/updateprofile1.html", {"update1": update1,"form":form})
 
 
-
-def home(request):
-    return render(request, "daycareapp/login1.html")
-
-
+@login_required
 def list_babies(request):
     babies = Baby.objects.all()
 
@@ -144,6 +203,7 @@ def list_babies(request):
        return render(request, "daycareapp/babies-list.html", {"babies": babies})
 
 
+@login_required
 def list_babysitter(request):
     siter = Babysitter.objects.all()
     if request.method == "POST":
@@ -158,15 +218,21 @@ def list_babysitter(request):
        return render(request, "daycareapp/babysitter list.html", {"siter": siter})
 
 
-def child_profile(request, pk,):  
-    child1 = Schoolfees.objects.all
+@login_required
+def child_profile(request, pk): 
+    
 
-  
+    #child1 = Schoolfees.objects.get(id=pk)
+    child = Baby.objects.get(id=pk)
+    return render(
+        request, "daycareapp/child profile.html", {"child": child,})
 
-  
-    return render(request, "daycareapp/child profile.html", {"child1": child1, })
+ 
 
 
+
+
+@login_required
 def child_reg(request):
     submitted = False
     if request.method == "POST":
@@ -185,6 +251,8 @@ def child_reg(request):
         "daycareapp/child reg.html",
         {'form': form, 'submitted': submitted})
 
+
+@login_required
 def babysitter_reg(request):
     submitted = False
     if request.method == "POST":
@@ -204,6 +272,7 @@ def babysitter_reg(request):
         {'form': form, 'submitted': submitted})
 
 
+@login_required
 def babysitter_profile(request, pk):
     babysitter = Babysitter.objects.get(id=pk)
     return render(
@@ -211,5 +280,6 @@ def babysitter_profile(request, pk):
     )
 
 
+@login_required
 def admin_panel(request):
     return render(request, "daycareapp/Admin panel.html")

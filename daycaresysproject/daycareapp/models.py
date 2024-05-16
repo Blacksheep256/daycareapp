@@ -1,5 +1,5 @@
 from django.db import models
-
+from django import forms
 
 # Create your models here.
 GENDER_CHOICES = (
@@ -58,12 +58,11 @@ class Procure(models.Model):
 
 class Dollsdashboard(models.Model):
    customer_name = models.CharField(max_length=20)
-   dollsbought =  models.FloatField(max_length=5)
+   dollsbought =  models.IntegerField(max_length=5)
    datebought = models.DateTimeField(auto_now_add=True)
-   totaldolls = models.FloatField(max_length=5 ,blank=True, null=True)
 
    def __str__(self):
-      return self.customer_name
+      return f"{self.customer_name} bought {self.dollsbought} balls on {self.datebought}"
 
 
 class Schoolfees(models.Model):
@@ -78,3 +77,9 @@ class Schoolfees(models.Model):
 
       def __str__(self):
          return f"{self.baby.first_name}"
+      
+
+class SchoolFeesSearchForm(forms.Form):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    first_name = forms.CharField(max_length=20, required=False)

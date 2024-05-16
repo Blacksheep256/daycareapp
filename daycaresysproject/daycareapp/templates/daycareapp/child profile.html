@@ -85,6 +85,15 @@
                                     <p class="mb-0">Parent Name</p>
                                 </div>
                                 <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{child.parent_name}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Child gender</p>
+                                </div>
+                                <div class="col-sm-9">
                                     <p class="text-muted mb-0">{{child.gender}}</p>
                                 </div>
                             </div>
@@ -94,10 +103,10 @@
                 <div class="col"></div>
             </div>
         </div>
-
-        <p>&nbsp;</p>
-        <h5>School  Fees Statement</h5>
-        <p>&nbsp;</p>
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <h5>School Fees Statement</h5>
         <table class="table">
             <thead>
                 <tr>
@@ -109,17 +118,20 @@
                 </tr>
             </thead>
             <tbody>
-                {% for i in child1 %}
+           
                 <tr>
-                    <th scope="row"> {{i.id}}</th>
-                    <td>{{i.type}}</td>
-                    <td>{{i.amount_paid}}</td>
-                    <td>{{i.date_of_payment}}</td>
+                    <th scope="row"> {{child1.id}}</th>
+                    <td>{{child1.type}}</td>
+                    <td>{{child1.amount_paid}}</td>
+                    <td>{{child1.date_of_payment}}</td>
 
                 </tr>
-                {% endfor %}
+           
             </tbody>
         </table>
+    </div>
+    <div class="col"></div>
+</div>
     </section>
 
     {% include 'daycareapp/footertmp.html' %}
