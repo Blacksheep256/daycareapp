@@ -58,7 +58,7 @@ class Procure(models.Model):
 
 class Dollsdashboard(models.Model):
    customer_name = models.CharField(max_length=20)
-   dollsbought =  models.IntegerField(max_length=5)
+   dollsbought =  models.IntegerField()
    datebought = models.DateTimeField(auto_now_add=True)
 
    def __str__(self):

@@ -11,25 +11,25 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # Logout view
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+# def logout_view(request):
+#     logout(request)
+#     return redirect('login')
 
 def restricted_page(request):
     return render(request, 'restricted_page.html')
 
 # Login view
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('restricted_page')
-        else:
-            return HttpResponse("Invalid login details")
-    return render(request, 'daycareapp/login.html')
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('restricted_page')
+#         else:
+#             return HttpResponse("Invalid login details")
+#     return render(request, 'daycareapp/login.html')
 
 
 

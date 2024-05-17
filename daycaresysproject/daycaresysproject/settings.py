@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f5f$trhv+%b9#5k&-j(b@-no4f949zqj28$i!5*&b6=nm-(yg1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-s
+
 ALLOWED_HOSTS = []
 
 
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
+    'crispy_bootstrap5',
     'daycareapp',
   
 ]
@@ -133,7 +134,9 @@ STATICFILES_DIR = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'restricted_page'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'admin-panel'#setting a login a user will be redirected to
+
+LOGIN_URL = 'login' #landing page where users login from
